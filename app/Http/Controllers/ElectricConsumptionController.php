@@ -12,7 +12,7 @@ class ElectricConsumptionController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     /**

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\District;
+use App\Models\Town;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class DistrictController extends Controller
 {
@@ -12,7 +14,10 @@ class DistrictController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Districts', [
+            'districts' => District::with('town')->get(),
+            'towns' => Town::all(),
+        ]);
     }
 
     /**
@@ -28,7 +33,9 @@ class DistrictController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        District::create($request->all());
+        //return back with success message
+        return redirect()->back()->with('success', 'District created successfully');
     }
 
     /**
@@ -52,7 +59,9 @@ class DistrictController extends Controller
      */
     public function update(Request $request, District $district)
     {
-        //
+        $district->update($request->all());
+        //return back with success message
+        return redirect()->back()->with('success', 'District updated successfully');
     }
 
     /**
@@ -60,6 +69,8 @@ class DistrictController extends Controller
      */
     public function destroy(District $district)
     {
-        //
+        $district->delete();
+        //return back with success message
+        return redirect()->back()->with('success', 'District deleted successfully');
     }
 }

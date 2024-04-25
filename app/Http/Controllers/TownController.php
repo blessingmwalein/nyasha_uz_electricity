@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\City;
 use App\Models\Town;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+
 
 class TownController extends Controller
 {
@@ -12,7 +15,10 @@ class TownController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Towns', [
+            'towns' => Town::with('city')->get(),
+            'cities' => City::all()
+        ]);
     }
 
     /**
@@ -28,7 +34,10 @@ class TownController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Town::create($request->all());
+
+        //return back with success message
+        return redirect()->back()->with('success', 'Town created successfully');
     }
 
     /**
@@ -52,7 +61,9 @@ class TownController extends Controller
      */
     public function update(Request $request, Town $town)
     {
-        //
+        //updat e
+        $town->update($request->all());
+        return redirect()->back()->with('success', 'Town updated successfully');
     }
 
     /**
@@ -60,6 +71,7 @@ class TownController extends Controller
      */
     public function destroy(Town $town)
     {
-        //
+        $town->delete();
+        return redirect()->back()->with('success', 'Town deleted successfully');
     }
 }

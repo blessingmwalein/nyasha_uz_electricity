@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class District extends Model
 {
     use HasFactory;
+    protected $guarded;
+
+    function town()
+    {
+        return $this->belongsTo(Town::class);
+    }
 }

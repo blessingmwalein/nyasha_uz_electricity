@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Distribution;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class DistributionController extends Controller
 {
@@ -12,7 +13,9 @@ class DistributionController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Distributions', [
+            'distributions' => Distribution::all(),
+        ]);
     }
 
     /**
@@ -28,7 +31,10 @@ class DistributionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Distribution::create($request->all());
+
+        //return back with success message
+        return redirect()->back()->with('success', 'Distribution created successfully');
     }
 
     /**
@@ -52,7 +58,10 @@ class DistributionController extends Controller
      */
     public function update(Request $request, Distribution $distribution)
     {
-        //
+        $distribution->update($request->all());
+
+        //return back with success message
+        return redirect()->back()->with('success', 'Distribution updated successfully');
     }
 
     /**
@@ -60,6 +69,9 @@ class DistributionController extends Controller
      */
     public function destroy(Distribution $distribution)
     {
-        //
+        $distribution->delete();
+
+        //return back with success message
+        return redirect()->back()->with('success', 'Distribution deleted successfully');
     }
 }

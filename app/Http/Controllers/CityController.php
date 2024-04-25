@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\City;
+use App\Models\Province;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class CityController extends Controller
 {
@@ -12,7 +14,10 @@ class CityController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('Cities', [
+            'cities' => City::with('province')->get(),
+            'provinces' => Province::all()
+        ]);
     }
 
     /**
@@ -28,7 +33,10 @@ class CityController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        City::create($request->all());
+
+        //return back with success message
+        return redirect()->back()->with('success', 'City created successfully');
     }
 
     /**
@@ -52,7 +60,10 @@ class CityController extends Controller
      */
     public function update(Request $request, City $city)
     {
-        //
+        $city->update($request->all());
+
+        //return back with success message
+        return redirect()->back()->with('success', 'City updated successfully');
     }
 
     /**
@@ -60,6 +71,9 @@ class CityController extends Controller
      */
     public function destroy(City $city)
     {
-        //
+        $city->delete();
+
+        //return back with success message
+        return redirect()->back()->with('success', 'City deleted successfully');
     }
 }

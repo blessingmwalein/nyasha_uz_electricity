@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Province;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class ProvinceController extends Controller
 {
@@ -12,7 +13,11 @@ class ProvinceController extends Controller
      */
     public function index()
     {
-        //
+
+
+        return Inertia::render('Provinces', [
+            'provinces' => Province::all(),
+        ]);
     }
 
     /**
@@ -28,7 +33,10 @@ class ProvinceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Province::create($request->all());
+
+        //return back with success message
+        return redirect()->back()->with('success', 'Province created successfully');
     }
 
     /**
@@ -53,6 +61,10 @@ class ProvinceController extends Controller
     public function update(Request $request, Province $province)
     {
         //
+        $province->update($request->all());
+
+        //return back with success message
+        return redirect()->back()->with('success', 'Province updated successfully');
     }
 
     /**
@@ -61,5 +73,9 @@ class ProvinceController extends Controller
     public function destroy(Province $province)
     {
         //
+        $province->delete();
+
+        //return back with success message
+        return redirect()->back()->with('success', 'Province deleted successfully');
     }
 }

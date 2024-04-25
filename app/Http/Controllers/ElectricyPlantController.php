@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\City;
 use App\Models\ElectricyPlant;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class ElectricyPlantController extends Controller
 {
@@ -12,7 +14,10 @@ class ElectricyPlantController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('ElectricyPlants', [
+            'plants' => ElectricyPlant::with('city')->get(),
+            'cities' => City::all(),
+        ]);
     }
 
     /**
@@ -28,7 +33,10 @@ class ElectricyPlantController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        ElectricyPlant::create($request->all());
+
+        //return back with success message
+        return redirect()->back()->with('success', 'Electricy Plant created successfully');
     }
 
     /**
@@ -52,7 +60,10 @@ class ElectricyPlantController extends Controller
      */
     public function update(Request $request, ElectricyPlant $electricyPlant)
     {
-        //
+        $electricyPlant->update($request->all());
+
+        //return back with success message
+        return redirect()->back()->with('success', 'Electricy Plant updated successfully');
     }
 
     /**
@@ -60,6 +71,8 @@ class ElectricyPlantController extends Controller
      */
     public function destroy(ElectricyPlant $electricyPlant)
     {
-        //
+        $electricyPlant->delete();
+        //return back with success message
+        return redirect()->back()->with('success', 'Electricy Plant deleted successfully');
     }
 }

@@ -95,7 +95,6 @@ export default {
                                     <th scope="col">Capacity</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Mse and Rmse</th>
-
                                 </tr>
                             </thead>
                             <tbody>

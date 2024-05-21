@@ -53,5 +53,6 @@ Route::middleware([
     Route::resource('districts', DistrictController::class);
     Route::resource('consumption', ElectricConsumptionController::class);
     Route::resource('distribution', DistributionController::class);
+    Route::post('get-distributions', [DistributionController::class, 'getEnergyDistributionsFromModel']);
     Route::resource('clients', ClientController::class);
 });

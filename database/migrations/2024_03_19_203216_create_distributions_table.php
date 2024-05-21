@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('distributions', function (Blueprint $table) {
             $table->id();
-            $table->date('date');
-            $table->integer('target_districts');
-            $table->integer('target_towns');
-            $table->integer('target_cities');
-            $table->string('distribution_schedule');
+            $table->string('month');
+            $table->string('target_city');
+            $table->json('distribution_schedule');
             $table->float('capacity');
-            $table->enum('distribution_status', ['pending', 'completed'])->default('pending')->index;
-
+            $table->string('distribution_status');
+            $table->string('shortfall')->nullable();
+            $table->string('mae')->nullable();
+            $table->string('rmse')->nullable();
             $table->timestamps();
         });
     }

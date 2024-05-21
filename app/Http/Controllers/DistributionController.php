@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\City;
 use App\Models\Distribution;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Inertia\Inertia;
 
 class DistributionController extends Controller
@@ -73,5 +75,48 @@ class DistributionController extends Controller
 
         //return back with success message
         return redirect()->back()->with('success', 'Distribution deleted successfully');
+    }
+
+    public function getEnergyDistributionsFromModel(Request $request)
+    {
+        $month = $request->month;
+
+        // Query the cities table using Eloquent
+        $cities = City::pluck('name')->toArray();
+
+        // Create the payload
+        $payload = [
+            'cities' => $cities,
+            'month' => $month
+        ];
+
+        // dd($payload);
+
+        $aiModeBaeUrl= env('AI_MODEL_BASE_URL');
+        // Send POST request to AI model API
+        $response = Http::post($aiModeBaeUrl . '/distribute_energy', $payload);
+
+        // Check for successful response
+        if ($response->successful()) {
+            $distributionPlans = $response->json();
+
+            // Store the distribution plans in the database
+            foreach ($distributionPlans as $plan) {
+                Distribution::create([
+                    'month' => $month,  // Store the current date
+                    'target_city' => $plan['city'],
+                    'distribution_schedule' => json_encode($plan['allocated_energy']),
+                    'capacity' => $plan['predicted_consumption'],
+                    'distribution_status' => $plan['status'],
+                    'shortfall' => $plan['shortfall'] ?? null,
+                    'mae' => $plan['accuracy_metrics']['Mean Absolute Error (MAE) Percentage'] ?? null,
+                    'rmse' => $plan['accuracy_metrics']['Root Mean Squared Error (RMSE) Percentage'] ?? null,
+                ]);
+            }
+
+            return back()->with('success', 'Distribution plans created successfully');
+        } else {
+            return back()->with('error', 'Failed to create distribution plans');
+        }
     }
 }

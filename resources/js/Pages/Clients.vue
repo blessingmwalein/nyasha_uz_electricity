@@ -22,6 +22,7 @@ export default {
                 number_of_appliances: 0,
                 number_of_residents: 0,
                 city_id: null,
+                monthly_consumption: 0,
             }),
             selectedClient: null,
         }
@@ -64,6 +65,7 @@ export default {
             this.form.number_of_appliances = client.number_of_appliances;
             this.form.number_of_residents = client.number_of_residents;
             this.form.city_id = client.city_id;
+            this.form.monthly_consumption = client.monthly_consumption;
         },
     }
 }
@@ -93,7 +95,7 @@ export default {
         <div class="offcanvas offcanvas-end w-full w-lg-1/3" data-bs-scroll="true" data-bs-backdrop="true" tabindex="-1"
             id="offcanvasCreate" aria-labelledby="offcanvasCreateLabel">
             <div class="offcanvas-header border-bottom py-4 bg-surface-secondary">
-                <h5 class="offcanvas-title" id="offcanvasCreateLabel">{{ selectedClient ? 'Update' : 'New' }} District
+                <h5 class="offcanvas-title" id="offcanvasCreateLabel">{{ selectedClient ? 'Update' : 'New' }} Client
                 </h5><button type="button" class="btn-close text-reset text-xs" data-bs-dismiss="offcanvas"
                     aria-label="Close"></button>
             </div>
@@ -138,14 +140,18 @@ export default {
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label class="form-label" for="last_name"># of Appliances</label>
                             <input type="number" v-model="form.number_of_appliances" class="form-control">
 
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label class="form-label" for="last_name"># of Residents</label>
                             <input type="number" v-model="form.number_of_residents" class="form-control">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label" for="last_name">Consumption(KW)</label>
+                            <input type="number" v-model="form.monthly_consumption" class="form-control">
                         </div>
                     </div>
                     <div class="modal-footer py-2 bg-surface-secondary">
@@ -176,10 +182,9 @@ export default {
                             <thead class="table-light">
                                 <tr>
                                     <th scope="col">Name</th>
-                                    <th scope="col">Email</th>
                                     <th scope="col">Phone</th>
-                                    <th scope="col">Address</th>
-                                    <th scope="col">Appliances</th>
+                                    <th scope="col">Location</th>
+                                    <th scope="col">Monthly Consumption</th>
                                     <th scope="col">Residents</th>
                                     <th></th>
                                 </tr>
@@ -196,8 +201,8 @@ export default {
                                     <td>{{ client.address }}</td>
 
 
-                                    <td>{{ client.number_of_appliances }}</td>
-                                    <td>{{ client.number_of_residents }}</td>
+                                    <td>{{ client.monthly_consumption }}KW</td>
+                                    <!-- <td>{{ client.number_of_residents }}</td> -->
                                     <td>{{ client.city?.name }}</td>
 
                                     <td class="text-end">

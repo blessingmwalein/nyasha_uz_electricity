@@ -21,6 +21,7 @@ export default {
                 location: '',
                 generation: 0,
                 city_id: null,
+                id: null,
             }),
             selectedPlant: null,
         }
@@ -29,6 +30,7 @@ export default {
     methods: {
         submit() {
             if (this.selectedPlant) {
+                this.form.id = this.selectedPlant.id;
                 this.form.put(`plants/${this.selectedPlant.id}`, {
                     onSuccess: () => {
                         this.form.reset();
@@ -116,7 +118,7 @@ export default {
                     </div>
                     <div class="row">
                         <div class="col-md-6">
-                            <label class="form-label" for="last_name">Capacity</label>
+                            <label class="form-label" for="last_name">Capacity(KW)</label>
                             <input type="number" v-model="form.capacity" class="form-control">
 
                         </div>
@@ -135,7 +137,7 @@ export default {
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <label class="form-label" for="last_name">Generation</label>
+                            <label class="form-label" for="last_name">Generation(KW)</label>
                             <input type="number" v-model="form.generation" class="form-control">
 
                         </div>
@@ -186,11 +188,20 @@ export default {
                                     </td>
                                     <td>{{ plant.type }}</td>
                                     <td>{{ plant.capacity }}</td>
-                                    <td>{{ plant.location }}</td>
+                                    <td>
+                                        <p
+                                            style="white-space: nowrap;
+                                            overflow: hidden;
+                                            width:300px;
+                                            text-overflow: ellipsis;
+                                            display: block;
+                                            ">
+                                            {{ plant.location }}</p>
+                                    </td>
 
 
                                     <td>{{ plant.city?.name }}</td>
-                                    <td>{{ plant.generation }}</td>
+                                    <td>{{ plant.generation }}KW</td>
 
                                     <td class="text-end">
                                         <a href="#offcanvasCreate" @click="edit(plant)" data-bs-toggle="offcanvas"

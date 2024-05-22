@@ -56,56 +56,21 @@ const logout = () => {
                             <Link class="nav-link" href="dashboard"><i class="bi bi-briefcase"></i> Dashboard</Link>
 
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="#sidebar-tasks" data-bs-toggle="collapse"
-                                role="button" aria-expanded="false" aria-controls="sidebar-tasks"><i
-                                    class="bi bi-kanban"></i> Zimbabwe</a>
-                            <div class="collapse" id="sidebar-tasks">
-                                <ul class="nav nav-sm flex-column">
-                                    <li class="nav-item">
-                                        <Link href="provinces" class="nav-link">Provinces</Link>
-                                    </li>
-                                    <li class="nav-item">
-                                        <Link href="cities" class="nav-link">Cities</Link>
-                                    </li>
-                                    <!-- <li class="nav-item">
-                                        <Link href="districts" class="nav-link">Districts</Link>
-                                    </li> -->
-                                    <!-- <li class="nav-item">
-                                        <Link href="towns" class="nav-link">Towns</Link>
-                                    </li> -->
-                                </ul>
-                            </div>
+                        <li class="nav-item">
+                            <Link class="nav-link" href="plants"><i class="bi bi-file-easel"></i> Plants</Link>
                         </li>
-
-                        <li class="nav-item"><a class="nav-link" href="#electricity" data-bs-toggle="collapse"
-                                role="button" aria-expanded="false" aria-controls="sidebar-integrations"><i
-                                    class="bi bi-terminal"></i> Electricity</a>
-                            <div class="collapse" id="electricity">
-                                <ul class="nav nav-sm flex-column">
-                                    <li class="nav-item">
-                                        <Link href="plants" class="nav-link">Plants</Link>
-                                    </li>
-                                    <li class="nav-item">
-                                        <Link href="generations" class="nav-link">Generations</Link>
-                                    </li>
-                                    <li class="nav-item">
-                                        <Link href="consumption" class="nav-link">Consumption</Link>
-                                    </li>
-                                    <li class="nav-item">
-                                        <Link href="distribution" class="nav-link">Distribution</Link>
-                                    </li>
-                                </ul>
-                            </div>
+                        <li class="nav-item">
+                            <Link class="nav-link" href="distribution"><i class="bi bi-share"></i>Distribution Plan
+                            </Link>
+                        </li>
+                        <li class="nav-item">
+                            <Link class="nav-link" href="cities"><i class="bi bi-geo-alt"></i> Cities</Link>
                         </li>
                         <li class="nav-item">
                             <Link class="nav-link" href="clients"><i class="bi bi-people"></i> Clients</Link>
-
                         </li>
-
                     </ul>
                     <hr class="navbar-divider my-4 opacity-70">
-
-
                 </div>
             </div>
         </nav>
@@ -203,19 +168,21 @@ const logout = () => {
                                         <div class="avatar avatar-sm bg-warning rounded-circle text-white"><img
                                                 alt="..." src="/assets/img/people/img-profile.jpg"></div>
                                     </div>
-                                    <div class="d-none d-sm-block ms-3"><span class="h6">{{$page.props?.auth?.user?.name}}</span></div>
+                                    <div class="d-none d-sm-block ms-3"><span class="h6">{{
+                                            $page.props?.auth?.user?.name }}</span></div>
                                     <div class="d-none d-md-block ms-md-2"><i
                                             class="bi bi-chevron-down text-muted text-xs"></i></div>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <div class="dropdown-header"><span class="d-block text-sm text-muted mb-1">Signed in
-                                            as</span> <span class="d-block text-heading font-semibold">{{$page.props?.auth?.user?.name}}</span></div>
+                                            as</span> <span class="d-block text-heading font-semibold">{{
+                                            $page.props?.auth?.user?.name }}</span>
+                                    </div>
 
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="#"><i class="bi bi-gear me-3"></i>Settings </a>
-                                    <a class="dropdown-item" href="#"
-                                     @click.prevent="logout()"
-                                    ><i class="bi bi-person me-3"></i>Logout</a>
+                                    <a class="dropdown-item" href="#" @click.prevent="logout()"><i
+                                            class="bi bi-person me-3"></i>Logout</a>
                                 </div>
                             </div>
                         </div>

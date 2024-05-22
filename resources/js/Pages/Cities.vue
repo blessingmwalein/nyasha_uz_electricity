@@ -97,21 +97,13 @@ export default {
 
                 <div class="offcanvas-body vstack gap-5">
                     <div class="row g-5">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div>
                                 <label class="form-label">Name</label>
                                 <input type="text" v-model="form.name" class="form-control">
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div><label class="form-label">Select Province</label>
-                                <select class="form-select" v-model="form.province_id"
-                                    aria-label="Default select example">
-                                    <option :value="province.id" v-for="province in provinces">{{ province.name }}
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
+
                     </div>
 
                     <div class="row">

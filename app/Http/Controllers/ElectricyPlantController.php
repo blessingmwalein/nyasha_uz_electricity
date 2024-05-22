@@ -60,7 +60,10 @@ class ElectricyPlantController extends Controller
      */
     public function update(Request $request, ElectricyPlant $electricyPlant)
     {
-        $electricyPlant->update($request->all());
+
+        $plant = ElectricyPlant::find($request->id);
+
+        $plant->update($request->all());
 
         //return back with success message
         return redirect()->back()->with('success', 'Electricy Plant updated successfully');

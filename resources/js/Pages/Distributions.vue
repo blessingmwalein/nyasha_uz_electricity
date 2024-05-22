@@ -17,8 +17,12 @@ export default {
             form: useForm({
                 month: '',
             }),
+            searchQuery: '',
             selectedPlant: null,
         }
+    },
+    mounted() {
+        this.initializeForm();
     },
 
     methods: {
@@ -32,10 +36,23 @@ export default {
             });
 
         },
+        initializeForm() {
+            const monthNames = [
+                'January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'
+            ];
+            const currentMonthIndex = new Date().getMonth();
+            const monthName = monthNames[currentMonthIndex];
+            this.searchQuery = monthName;
+            this.form.month = monthName;
+        },
+        search() {
+            this.$inertia.get(`search-month`, {
+                month: this.searchQuery
+            });
+        },
 
-
-
-
+        //get current month set form month to current month
     }
 }
 
@@ -47,42 +64,70 @@ export default {
             <div class="container-fluid">
                 <div class=" pt-6">
                     <div class="row align-items-center">
-                        <div class="col-sm col-12">
+                        <div class="col-8">
                             <h1 class="h2 ls-tight">Distribution Plans</h1>
                         </div>
-                        <div class="col-sm-auto col-12 mt-4 mt-sm-0">
+                        <div class="col-4 mt-4">
+                            <div class=" d-flex h-1/2">
+                                <select style="height: 50px; width: 200px" class="form-select" v-model="form.month">
+                                    <option>January</option>
+                                    <option>February</option>
+                                    <option>March</option>
+                                    <option>April</option>
+                                    <option>May</option>
+                                    <option>June</option>
+                                    <option>July</option>
+                                    <option>August</option>
+                                    <option>September</option>
+                                    <option>October</option>
+                                    <option>November </option>
+                                    <option>December</option>
+                                </select>
 
+
+                                <button type="button" @click="submit"
+                                    style="height: 50px; width: 200px;margin-left:20px"
+                                    class="btn btn-sm btn-primary mr-3 p-3">Get
+                                    Plan</button>
+
+
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </header>
 
-
         <div class="container-fluid mt-4">
             <div class="vstack gap-4">
-
                 <div class="card">
                     <div class="card-header border-bottom d-flex align-items-center">
+                        <div></div>
                         <h5 class="me-auto">Monthly Distributions</h5>
+                        <div class="col-6 mt-4 d-flex">
+                            <div class=" d-flex h-1/2">
+                                <select style="height: 50px; width:300px" class="form-select" v-model="searchQuery">
+                                    <option>January</option>
+                                    <option>February</option>
+                                    <option>March</option>
+                                    <option>April</option>
+                                    <option>May</option>
+                                    <option>June</option>
+                                    <option>July</option>
+                                    <option>August</option>
+                                    <option>September</option>
+                                    <option>October</option>
+                                    <option>November </option>
+                                    <option>December</option>
+                                </select>
 
-                        <div> <select class="form-select" v-model="form.month">
-                                <option>January</option>
-                                <option>February</option>
-                                <option>March</option>
-                                <option>April</option>
-                                <option>May</option>
-                                <option>June</option>
-                                <option>July</option>
-                                <option>August</option>
-                                <option>September</option>
-                                <option>October</option>
-                                <option>November </option>
-                                <option>December</option>
-                            </select></div>
 
-                        <div class="ml-3">
-                            <button type="button" @click="submit" class="btn btn-sm btn-primary mr-3 p-3">Get For The Month</button>
+                                <button type="button" @click="search"
+                                    style="height: 50px; width: 200px;margin-left:20px"
+                                    class="btn btn-sm btn-primary mr-3 p-3">Fetch Month Plan</button>
+
+
+                            </div>
 
                         </div>
                     </div>

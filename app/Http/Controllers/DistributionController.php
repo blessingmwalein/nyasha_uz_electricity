@@ -15,8 +15,21 @@ class DistributionController extends Controller
      */
     public function index()
     {
+        $distributions = Distribution::where('month', $this->getCurrentMonthNameCamelCase())->get();
+
         return Inertia::render('Distributions', [
-            'distributions' => Distribution::all(),
+            'distributions' => $distributions,
+        ]);
+    }
+
+    //search by month
+    public function search(Request $request)
+    {
+        $month = $request->month;
+        $distributions = Distribution::where('month', $month)->get();
+
+        return Inertia::render('Distributions', [
+            'distributions' => $distributions,
         ]);
     }
 
@@ -26,6 +39,17 @@ class DistributionController extends Controller
     public function create()
     {
         //
+    }
+
+    public static function getCurrentMonthNameCamelCase()
+    {
+        $monthNames = [
+            'January', 'February', 'March', 'April', 'May', 'June',
+            'July', 'August', 'September', 'October', 'November', 'December'
+        ];
+        $currentMonthIndex = date('n') - 1; // 'n' returns a month index from 1 to 12
+        $currentMonth = $monthNames[$currentMonthIndex];
+        return lcfirst($currentMonth);
     }
 
     /**
@@ -84,6 +108,7 @@ class DistributionController extends Controller
         // Query the cities table using Eloquent
         $cities = City::pluck('name')->toArray();
 
+
         // Create the payload
         $payload = [
             'cities' => $cities,
@@ -92,7 +117,7 @@ class DistributionController extends Controller
 
         // dd($payload);
 
-        $aiModeBaeUrl= env('AI_MODEL_BASE_URL');
+        $aiModeBaeUrl = env('AI_MODEL_BASE_URL');
         // Send POST request to AI model API
         $response = Http::post($aiModeBaeUrl . '/distribute_energy', $payload);
 

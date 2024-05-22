@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\DistributionController;
 use App\Http\Controllers\DistrictController;
 use App\Http\Controllers\ElectricConsumptionController;
@@ -38,12 +39,8 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
-    Route::get('/', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
+
+    Route::get('/dashboard', [Controller::class, 'dashboard'])->name('dashboard');
 
     Route::resource('provinces', ProvinceController::class);
     Route::resource('towns', TownController::class);
@@ -54,5 +51,7 @@ Route::middleware([
     Route::resource('consumption', ElectricConsumptionController::class);
     Route::resource('distribution', DistributionController::class);
     Route::post('get-distributions', [DistributionController::class, 'getEnergyDistributionsFromModel']);
+    Route::post('search-month', [DistributionController::class, 'search']);
+    Route::get('search-month', [DistributionController::class, 'search']);
     Route::resource('clients', ClientController::class);
 });
